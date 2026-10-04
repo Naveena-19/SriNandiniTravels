@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Driver Dashboard | Sri Nandini Travels</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="dashboard.css" />
+  </head>
+  <body class="dashboard-body">
+    <aside class="sidebar">
+      <div class="brand-panel">
+        <div class="brand-mark">SN</div>
+        <div>
+          <strong>Sri Nandini Travels</strong>
+          <small>Driver dashboard</small>
+        </div>
+      </div>
+
+      <nav class="nav">
+        <button class="nav-item active" type="button" data-filter="all">All rides</button>
+        <button class="nav-item" type="button" data-filter="today">Today</button>
+        <button class="nav-item" type="button" data-filter="upcoming">Upcoming</button>
+        <button class="nav-item" type="button" data-filter="completed">Completed</button>
+        <button class="nav-item" type="button" data-filter="calls">Call-only</button>
+      </nav>
+
+      <div class="sidebar-card">
+        <span class="label">Driver</span>
+        <strong id="driverName">Driver</strong>
+        <small>Easy trip board</small>
+      </div>
+    </aside>
+
+    <main class="dashboard-main">
+      <header class="topbar-dashboard">
+        <div>
+          <p class="eyebrow">Operations</p>
+          <h1>Trip board</h1>
+        </div>
+        <div class="topbar-actions">
+          <button class="btn btn-light" id="addTripButton" type="button">➕ Add call trip</button>
+          <button class="btn btn-primary" id="logoutButton" type="button">Logout</button>
+        </div>
+      </header>
+
+      <section class="stats-grid">
+        <article class="stat-card accent">
+          <span>Total</span>
+          <strong id="totalRides">0</strong>
+          <small>All trips</small>
+        </article>
+        <article class="stat-card">
+          <span>Today</span>
+          <strong id="todayCount">0</strong>
+          <small>For today</small>
+        </article>
+        <article class="stat-card">
+          <span>Active</span>
+          <strong id="activeCount">0</strong>
+          <small>On the road</small>
+        </article>
+        <article class="stat-card">
+          <span>Calls</span>
+          <strong id="callsCount">0</strong>
+          <small>Need follow-up</small>
+        </article>
+      </section>
+
+      <section class="panel" id="rides">
+        <div class="panel-head">
+          <div class="panel-title-wrap">
+            <p class="eyebrow">Trips</p>
+            <h2>Ride list</h2>
+          </div>
+          <div class="panel-right">
+            <label class="search-box">
+              <span>Search</span>
+              <input id="rideSearch" type="search" placeholder="Name or route" />
+            </label>
+          </div>
+        </div>
+
+        <div id="tripList" class="trip-list" aria-live="polite"></div>
+      </section>
+    </main>
+
+    <aside id="tripDrawer" class="trip-drawer hidden" aria-label="Add manual trip">
+      <div class="drawer-head">
+        <div>
+          <p class="eyebrow">Quick add</p>
+          <h3>Add call trip</h3>
+        </div>
+        <button id="closeDrawer" class="icon-btn" type="button" aria-label="Close form">✕</button>
+      </div>
+
+      <form id="manualTripForm" class="manual-form">
+        <label>
+          <span>Name</span>
+          <input name="name" type="text" required placeholder="Customer name" />
+        </label>
+
+        <label>
+          <span>Phone</span>
+          <input name="phone" type="tel" inputmode="numeric" maxlength="10" placeholder="10-digit number" required />
+        </label>
+
+        <label>
+          <span>Pickup</span>
+          <input name="pickup" type="text" required placeholder="Pickup location" />
+        </label>
+
+        <label>
+          <span>Destination</span>
+          <input name="destination" type="text" required placeholder="Destination" />
+        </label>
+
+        <label>
+          <span>Date</span>
+          <input name="date" type="date" required />
+        </label>
+
+        <label>
+          <span>Car</span>
+          <select name="carType" required>
+            <option value="5-seater">5-seater</option>
+            <option value="7-seater">7-seater</option>
+          </select>
+        </label>
+
+        <label>
+          <span>Status</span>
+          <select name="status" required>
+            <option value="upcoming">Upcoming</option>
+            <option value="call-only">Call-only</option>
+            <option value="active">Active</option>
+            <option value="completed">Completed</option>
+          </select>
+        </label>
+
+        <label>
+          <span>Notes</span>
+          <textarea name="notes" rows="3" placeholder="Any notes"></textarea>
+        </label>
+
+        <button class="btn btn-primary full-width" type="submit">Save trip</button>
+      </form>
+    </aside>
+
+    <div id="toast" class="toast" role="status" aria-live="polite"></div>
+
+    <script src="dashboard.js"></script>
+  </body>
+</html>

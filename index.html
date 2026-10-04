@@ -1,0 +1,450 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Sri Nandini Travels | Cab Service in Kukatpally, Hyderabad</title>
+    <meta
+      name="description"
+      content="Sri Nandini Travels is a cab and tour service from Kukatpally, Hyderabad, offering local rides, airport trips, family journeys, pilgrimage tours and outstation travel."
+    />
+    <meta property="og:title" content="Sri Nandini Travels | Cab Service in Kukatpally, Hyderabad" />
+    <meta
+      property="og:description"
+      content="Cab and tour service from Kukatpally, Hyderabad with clean AC cars for local, airport and outstation trips. Book by WhatsApp or call today."
+    />
+    <meta property="og:type" content="website" />
+    <meta property="og:image" content="https://images.unsplash.com/photo-1549399542-7e3f8b79c341?auto=format&fit=crop&w=1200&q=80" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Noto+Sans+Telugu:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="styles.css" />
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "TravelAgency",
+        "name": "Sri Nandini Travels",
+        "description": "Cab and tour service from Kukatpally, Hyderabad for local, airport and outstation trips.",
+        "telephone": "+917981568447",
+        "address": {
+          "@type": "PostalAddress",
+          "addressLocality": "Hyderabad",
+          "addressRegion": "Telangana",
+          "addressCountry": "IN"
+        },
+        "areaServed": "Hyderabad",
+        "url": "https://example.com"
+      }
+    </script>
+  </head>
+  <body>
+    <header class="topbar">
+      <div class="container header-inner">
+        <a href="#home" class="brand" aria-label="Sri Nandini Travels home">
+          <span class="brand-mark" aria-hidden="true"><span>SN</span></span>
+          <div>
+            <strong data-i18n="siteName">Sri Nandini Travels</strong>
+            <small data-i18n="tagline">Hyderabad to anywhere</small>
+          </div>
+        </a>
+
+        <div class="header-actions">
+          <button class="lang-toggle" type="button" aria-label="Switch language">
+            <span class="lang-option active" data-lang="en">EN</span>
+            <span class="lang-divider">|</span>
+            <span class="lang-option" data-lang="te">తెలుగు</span>
+          </button>
+          <a class="btn btn-secondary" href="dashboard-login.html">Driver Dashboard</a>
+          <a class="btn btn-primary" href="tel:+917981568447" data-i18n="callNow">Call Now</a>
+        </div>
+      </div>
+    </header>
+
+    <main>
+      <section id="home" class="hero">
+        <div class="container hero-inner">
+          <div class="hero-copy">
+            <span class="eyebrow" data-i18n="eyebrow">Safe and comfortable travel</span>
+            <h1 data-i18n="heroTitle">Comfortable travel to every destination, with care you can trust.</h1>
+            <p data-i18n="heroSubtitle">
+              One-way rides, round trips and family tours across India with clean AC cars and punctual drivers.
+            </p>
+            <p class="service-area" data-i18n="serviceArea">Services from Kukatpally, Hyderabad</p>
+
+            <div class="hero-actions">
+              <a class="btn btn-primary btn-lg" href="#booking" data-i18n="bookWhatsApp">Book on WhatsApp</a>
+              <a class="btn btn-secondary btn-lg" href="tel:+917981568447" data-i18n="callNow">Call Now</a>
+            </div>
+            <a class="hero-reviews-link" href="#reviews"><span aria-hidden="true">★</span> <span data-i18n="heroGoogleReviews">Read Google reviews</span></a>
+
+            <ul class="hero-points">
+              <li data-i18n="point1">Verified drivers</li>
+              <li data-i18n="point2">AC cars</li>
+              <li data-i18n="point3">24/7 support</li>
+            </ul>
+          </div>
+
+          <div class="hero-visual" aria-label="Cab travel route illustration">
+            <div class="route-panel">
+              <span class="map-pin pin-start" aria-hidden="true">●</span>
+              <span class="map-pin pin-end" aria-hidden="true">●</span>
+              <img
+                src="https://images.unsplash.com/photo-1492144534655-ae79c964c9d7?auto=format&fit=crop&w=900&q=80"
+                alt="Comfortable cab ready for travel"
+              />
+              <div class="route-track" aria-hidden="true">
+                <span class="route-start">Start</span>
+                <span class="route-line"><i></i></span>
+                <span class="route-end">Destination</span>
+              </div>
+              <strong data-i18n="routeVisualText">Your comfortable journey starts here</strong>
+            </div>
+          </div>
+
+        </div>
+      </section>
+
+      <section id="booking" class="section booking-section">
+        <div class="container booking-wrap">
+          <div class="booking-copy">
+            <span class="pill" data-i18n="booking">Booking</span>
+            <h2 data-i18n="bookingHeading">Send your trip details and we will call you back</h2>
+            <p data-i18n="bookingSubtext">Share your date, pickup place and destination. We will confirm the best plan for your trip.</p>
+          </div>
+
+          <form id="bookingForm" class="booking-form" novalidate>
+            <div class="form-grid">
+              <label>
+                <span><span data-i18n="nameLabel">Name</span> <b class="required-marker" aria-hidden="true">*</b></span>
+                <input id="name" name="name" type="text" data-i18n-placeholder="namePlaceholder" placeholder="Your name" required />
+              </label>
+
+              <label>
+                <span><span data-i18n="phoneLabel">Phone number</span> <b class="required-marker" aria-hidden="true">*</b></span>
+                <input id="phone" name="phone" type="tel" inputmode="numeric" pattern="[0-9]{10}" maxlength="10" data-i18n-placeholder="phonePlaceholder" placeholder="10-digit mobile number" required />
+                <small class="privacy-note" data-i18n="privacyNote">Your number is shared only with Sri Nandini Travels through WhatsApp for this booking.</small>
+              </label>
+
+              <label>
+                <span data-i18n="pickupLabel">Pickup location</span>
+                <textarea id="pickup" name="pickup" rows="2" data-i18n-placeholder="pickupPlaceholder" placeholder="Paste pickup address or Google Maps location"></textarea>
+                <button id="useLocation" class="location-btn" type="button" data-i18n="useLocation">Detect my pickup location</button>
+              </label>
+
+              <label>
+                <span data-i18n="destinationLabel">Drop / destination</span>
+                <textarea id="destination" name="destination" rows="2" data-i18n-placeholder="destinationPlaceholder" placeholder="Paste destination address or Google Maps location"></textarea>
+              </label>
+
+              <label>
+                <span data-i18n="dateLabel">Travel date</span>
+                <input id="date" name="date" type="date" />
+              </label>
+
+              <label>
+                <span data-i18n="carTypeField">Car type</span>
+                <select id="carType" name="carType">
+                  <option value="" data-i18n="selectCar">Select car</option>
+                  <option value="5-seater" data-i18n="car5Option">5-seater</option>
+                  <option value="7-seater" data-i18n="car7Option">7-seater</option>
+                </select>
+              </label>
+
+            </div>
+
+            <div class="form-actions">
+              <button id="submitBooking" type="submit" class="btn btn-primary btn-lg" data-i18n="submitBtn">Send on WhatsApp</button>
+            </div>
+            <div id="bookingStatus" class="booking-status" role="status" aria-live="polite"></div>
+            <p class="form-note" data-i18n="formNote">Tolls and taxes are extra and depend on the route. Final fare is confirmed by the driver.</p>
+          </form>
+        </div>
+      </section>
+
+      <section id="cars" class="section">
+        <div class="container">
+          <div class="section-heading">
+            <span class="pill" data-i18n="ourCars">Our Cars</span>
+            <h2 data-i18n="carsHeading">Clean, comfortable rides for families and groups</h2>
+          </div>
+
+          <div class="cars-grid">
+            <article class="car-card">
+              <div class="car-gallery" aria-label="Car 1 photos">
+                <figure>
+                  <img src="Images/Car1_1.jpeg" alt="Car 1 exterior" loading="lazy" />
+                  <figcaption>Exterior</figcaption>
+                </figure>
+                <figure>
+                  <img src="Images/Car1_2.jpeg" alt="Car 1 seats" loading="lazy" />
+                  <figcaption>Seats</figcaption>
+                </figure>
+                <figure>
+                  <img src="Images/Car1_3.jpeg" alt="Car 1 dashboard" loading="lazy" />
+                  <figcaption>Dashboard</figcaption>
+                </figure>
+              </div>
+              <div class="car-card-body">
+                <h3 data-i18n="car5Title">Swift Dzire - 5-Seater</h3>
+                <ul>
+                  <li><strong data-i18n="seatsLabel">Seats:</strong> <span data-i18n="seats5">5 seats</span></li>
+                  <li><strong data-i18n="acLabel">AC:</strong> <span data-i18n="acValue">Yes</span></li>
+                  <li><strong data-i18n="luggageLabel">Luggage:</strong> <span data-i18n="luggage5">Comfortable luggage space</span></li>
+                  <li><strong data-i18n="rateLabel">Rate:</strong> <span data-i18n="rate5">₹15/km + extra charges</span></li>
+                </ul>
+              </div>
+            </article>
+
+            <article class="car-card">
+              <div class="car-gallery" aria-label="Car 2 photos">
+                <figure>
+                  <img src="Images/Car2_1.jpeg" alt="Car 2 exterior" loading="lazy" />
+                  <figcaption>Exterior</figcaption>
+                </figure>
+                <figure>
+                  <img src="Images/Car2_2.jpeg" alt="Car 2 side view" loading="lazy" />
+                  <figcaption>Side view</figcaption>
+                </figure>
+                <figure>
+                  <img src="Images/Car2_3.jpeg" alt="Car 2 dashboard" loading="lazy" />
+                  <figcaption>Dashboard</figcaption>
+                </figure>
+              </div>
+              <div class="car-card-body">
+                <h3 data-i18n="car7Title">Suzuki Ertiga - 7-Seater</h3>
+                <ul>
+                  <li><strong data-i18n="seatsLabel">Seats:</strong> <span data-i18n="seats7">7 seats</span></li>
+                  <li><strong data-i18n="acLabel">AC:</strong> <span data-i18n="acValue">Yes</span></li>
+                  <li><strong data-i18n="luggageLabel">Luggage:</strong> <span data-i18n="luggage7">More room for bags</span></li>
+                  <li><strong data-i18n="rateLabel">Rate:</strong> <span data-i18n="rate7">₹19/km + extra charges</span></li>
+                </ul>
+              </div>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section id="reviews" class="section alt-bg">
+        <div class="container">
+          <div class="section-heading">
+            <span class="pill" data-i18n="customerReviews">Google reviews</span>
+            <h2 data-i18n="reviewsHeading">Find us on Google</h2>
+          </div>
+
+          <p class="reviews-intro" data-i18n="reviewsPrompt">Read customer feedback on Google or share your experience with us.</p>
+          <div class="hero-actions reviews-actions">
+            <a class="btn btn-secondary" href="https://www.google.com/maps/search/?api=1&amp;query=Sri%20Nandini%20Travels%20Kukatpally%20Hyderabad" target="_blank" rel="noopener noreferrer" data-i18n="readGoogleReviews">Read Google reviews</a>
+            <a class="btn btn-primary" href="https://www.google.com/maps/search/?api=1&amp;query=Sri%20Nandini%20Travels%20Kukatpally%20Hyderabad" target="_blank" rel="noopener noreferrer" data-i18n="leaveGoogleReview">Leave a Google review</a>
+          </div>
+        </div>
+      </section>
+
+      <section id="pricing" class="section alt-bg">
+        <div class="container">
+          <div class="section-heading">
+            <span class="pill" data-i18n="pricing">Pricing</span>
+            <h2 data-i18n="pricingHeading">Clear rates with flexible trip planning</h2>
+          </div>
+
+          <div class="pricing-grid">
+            <div class="price-card price-card-featured">
+              <h3 data-i18n="above300Title">Trips above 300 km</h3>
+              <div class="price-line">
+                <span data-i18n="fiveSeaterRate">5-seater: ₹15/km</span><br />
+                <span data-i18n="sevenSeaterRate">7-seater: ₹19/km</span>
+              </div>
+              <p data-i18n="extraChargesNote">Extra charges include tolls, parking, state permits, driver allowance and night halt where applicable.</p>
+            </div>
+
+            <div class="price-card">
+              <h3 data-i18n="within300Title">All other trips</h3>
+              <div class="price-line price-line-muted" data-i18n="within300Price">Price discussed by phone</div>
+              <p data-i18n="callDiscussText">Airport rides, local trips, trips within 300 km and other services are priced after discussing your route.</p>
+              <div class="hero-actions">
+                <a class="btn btn-primary" href="tel:+917981568447" data-i18n="callDiscussBtn">Call to Discuss</a>
+                <a class="btn btn-secondary" href="https://wa.me/917981568447" target="_blank" rel="noreferrer" data-i18n="whatsappContact">WhatsApp</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="routes" class="section alt-bg">
+        <div class="container">
+          <div class="section-heading">
+            <span class="pill" data-i18n="popularRoutes">Popular routes</span>
+            <h2 data-i18n="routesHeading">Most booked family and pilgrimage trips</h2>
+          </div>
+
+          <div class="routes-grid">
+            <article class="route-card">
+              <h3>Tirupati</h3>
+              <p data-i18n="routeDescTirupati">Pilgrimage trip</p>
+              <a class="route-btn" data-destination="Tirupati" data-i18n="whatsappContact" target="_blank" rel="noreferrer">WhatsApp</a>
+            </article>
+            <article class="route-card">
+              <h3>Srisailam</h3>
+              <p data-i18n="routeDescSrisailam">Hill trip</p>
+              <a class="route-btn" data-destination="Srisailam" data-i18n="whatsappContact" target="_blank" rel="noreferrer">WhatsApp</a>
+            </article>
+            <article class="route-card">
+              <h3>Yadadri</h3>
+              <p data-i18n="routeDescYadadri">Temple visit</p>
+              <a class="route-btn" data-destination="Yadadri" data-i18n="whatsappContact" target="_blank" rel="noreferrer">WhatsApp</a>
+            </article>
+            <article class="route-card">
+              <h3>Vijayawada</h3>
+              <p data-i18n="routeDescVijayawada">City and family travel</p>
+              <a class="route-btn" data-destination="Vijayawada" data-i18n="whatsappContact" target="_blank" rel="noreferrer">WhatsApp</a>
+            </article>
+            <article class="route-card">
+              <h3>Bengaluru</h3>
+              <p data-i18n="routeDescBengaluru">Outstation route</p>
+              <a class="route-btn" data-destination="Bengaluru" data-i18n="whatsappContact" target="_blank" rel="noreferrer">WhatsApp</a>
+            </article>
+            <article class="route-card">
+              <h3 data-i18n="airportTitle">Airport</h3>
+              <p data-i18n="routeDescAirport">Airport pickup and drop</p>
+              <a class="route-btn" data-destination="Hyderabad Airport" data-i18n="whatsappContact" target="_blank" rel="noreferrer">WhatsApp</a>
+            </article>
+            <article class="route-card">
+              <h3>Warangal</h3>
+              <p data-i18n="routeDescWarangal">Short family trip</p>
+              <a class="route-btn" data-destination="Warangal" data-i18n="whatsappContact" target="_blank" rel="noreferrer">WhatsApp</a>
+            </article>
+            <article class="route-card">
+              <h3>Vizag</h3>
+              <p data-i18n="routeDescVizag">Coastal trip</p>
+              <a class="route-btn" data-destination="Vizag" data-i18n="whatsappContact" target="_blank" rel="noreferrer">WhatsApp</a>
+            </article>
+            <article class="route-card">
+              <h3>Goa</h3>
+              <p data-i18n="routeDescGoa">Holiday travel</p>
+              <a class="route-btn" data-destination="Goa" data-i18n="whatsappContact" target="_blank" rel="noreferrer">WhatsApp</a>
+            </article>
+            <article class="route-card">
+              <h3>Hampi</h3>
+              <p data-i18n="routeDescHampi">Heritage trip</p>
+              <a class="route-btn" data-destination="Hampi" data-i18n="whatsappContact" target="_blank" rel="noreferrer">WhatsApp</a>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section id="why-us" class="section">
+        <div class="container">
+          <div class="section-heading">
+            <span class="pill" data-i18n="whyChooseUs">Why choose us</span>
+            <h2 data-i18n="whyHeading">Reliable travel for families, pilgrims and work trips</h2>
+          </div>
+
+          <div class="features-grid">
+            <div class="feature-card">
+              <h3 data-i18n="feature1Title">Experienced driver</h3>
+              <p data-i18n="feature1Text">Comfortable travel with a trained and responsible driver.</p>
+            </div>
+            <div class="feature-card">
+              <h3 data-i18n="feature2Title">Clean AC cars</h3>
+              <p data-i18n="feature2Text">Well-maintained vehicles for a smoother ride.</p>
+            </div>
+            <div class="feature-card">
+              <h3 data-i18n="feature3Title">Punctual pickup</h3>
+              <p data-i18n="feature3Text">On-time arrival for business and family travel plans.</p>
+            </div>
+            <div class="feature-card">
+              <h3 data-i18n="feature4Title">No hidden charges</h3>
+              <p data-i18n="feature4Text">Clear explanations of all route-based extras before travel.</p>
+            </div>
+            <div class="feature-card">
+              <h3 data-i18n="feature5Title">Family-friendly</h3>
+              <p data-i18n="feature5Text">Comfortable and respectful service for every age group.</p>
+            </div>
+            <div class="feature-card">
+              <h3 data-i18n="feature6Title">24/7 support</h3>
+              <p data-i18n="feature6Text">Flexible support for pickups, tours and travel planning.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="faq" class="section">
+        <div class="container faq-wrap">
+          <div class="section-heading left-align">
+            <span class="pill" data-i18n="faq">FAQ</span>
+            <h2 data-i18n="faqHeading">Common questions before booking</h2>
+          </div>
+
+          <div class="faq-list">
+            <details open>
+              <summary data-i18n="faq1Q">Are tolls and taxes extra?</summary>
+              <p data-i18n="faq1A">Yes. Tolls, parking, permits and route-based charges are extra and final fare is confirmed by the driver.</p>
+            </details>
+            <details>
+              <summary data-i18n="faq2Q">Is driver allowance included?</summary>
+              <p data-i18n="faq2A">Driver allowance and night halt are extra when applicable, depending on route and trip duration.</p>
+            </details>
+            <details>
+              <summary data-i18n="faq3Q">Do you provide night trips or halt stays?</summary>
+              <p data-i18n="faq3A">Yes, depending on the trip and route. The driver will confirm the final arrangement and extra charges.</p>
+            </details>
+            <details>
+              <summary data-i18n="faq4Q">Can I pay advance?</summary>
+              <p data-i18n="faq4A">Advance payment can be discussed on the call based on the route and booking type.</p>
+            </details>
+            <details>
+              <summary data-i18n="faq5Q">What if I need to cancel?</summary>
+              <p data-i18n="faq5A">Cancellation terms are discussed during booking. Please contact the driver or owner for the latest policy.</p>
+            </details>
+            <details>
+              <summary data-i18n="faq6Q">Do you allow luggage and airport pickup?</summary>
+              <p data-i18n="faq6A">Yes, luggage is accepted based on the car type and trip route. Airport and home pickup can be arranged on request.</p>
+            </details>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="footer">
+      <div class="container footer-inner">
+        <div>
+          <h3 data-i18n="siteName">Sri Nandini Travels</h3>
+          <p data-i18n="footerLocation">Hyderabad, Telangana</p>
+          <p class="footer-description" data-i18n="footerDescription">Sri Nandini Travels provides comfortable cab and tour services from Kukatpally, Hyderabad for local rides, airport trips, family journeys, pilgrimage tours and outstation travel.</p>
+          <a href="tel:+917981568447">+91 79815 68447</a>
+        </div>
+
+        <div class="footer-actions">
+          <a class="btn btn-primary" href="https://wa.me/917981568447" target="_blank" rel="noreferrer" data-i18n="whatsappContact">WhatsApp</a>
+        </div>
+      </div>
+
+      <div class="container qr-container">
+        <div class="qr-box">
+          <img src="https://api.qrserver.com/v1/create-qr-code/?size=180x180&data=https://example.com" alt="QR code for Sri Nandini Travels website" />
+        </div>
+      </div>
+    </footer>
+
+    <div class="mobile-bar">
+      <a class="mobile-bar-item" href="tel:+917981568447" aria-label="Call Sri Nandini Travels">
+        <span>📞</span>
+        <strong data-i18n="callNow">Call</strong>
+      </a>
+      <a class="mobile-bar-item" href="https://wa.me/917981568447" target="_blank" rel="noreferrer" aria-label="Chat on WhatsApp">
+        <span>💬</span>
+        <strong data-i18n="whatsappContact">WhatsApp</strong>
+      </a>
+    </div>
+
+    <a class="floating-whatsapp" href="https://wa.me/917981568447" target="_blank" rel="noreferrer" aria-label="WhatsApp chat">
+      💬
+    </a>
+
+    <div id="toast" class="toast" role="status" aria-live="polite"></div>
+
+    <script src="script.js"></script>
+  </body>
+</html>
