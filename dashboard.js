@@ -1,261 +1,602 @@
-const TRIP_STORAGE_KEY = 'sn_driver_trips';
-const LEGACY_DEMO_TRIP_IDS = new Set(['R-2041', 'R-2048', 'R-2050', 'R-2053', 'R-2057']);
+const SUPABASE_URL =
+  "https://oktndxyfucqibnjrnepa.supabase.co";
 
-let currentFilter = 'all';
+const SUPABASE_ANON_KEY =
+  "sb_publishable_NZGtnaEy9a2AD71b6VMqKg_78PHPEck";
+
+const supabaseClient =
+  window.supabase.createClient(
+    SUPABASE_URL,
+    SUPABASE_ANON_KEY
+  );
+
+let currentFilter = "all";
+let bookings = [];
 
 function getToday() {
-  return new Date().toISOString().split('T')[0];
-}
-
-function getTrips() {
-  const savedTrips = JSON.parse(localStorage.getItem(TRIP_STORAGE_KEY) || '[]');
-  const trips = Array.isArray(savedTrips)
-    ? savedTrips.filter((trip) => !LEGACY_DEMO_TRIP_IDS.has(trip.id))
-    : [];
-  if (trips.length !== savedTrips.length) {
-    localStorage.setItem(TRIP_STORAGE_KEY, JSON.stringify(trips));
-  }
-  return trips;
-}
-
-function saveTrips(trips) {
-  const currentTrips = trips.filter((trip) => !LEGACY_DEMO_TRIP_IDS.has(trip.id));
-  localStorage.setItem(TRIP_STORAGE_KEY, JSON.stringify(currentTrips));
-}
-
-function showToast(message) {
-  const toast = document.getElementById('toast');
-  if (!toast) return;
-  toast.textContent = message;
-  toast.classList.add('show');
-  clearTimeout(showToast.timeoutId);
-  showToast.timeoutId = setTimeout(() => toast.classList.remove('show'), 2200);
+  return new Date().toISOString().split("T")[0];
 }
 
 function formatDate(dateStr) {
-  if (!dateStr) return 'No date';
+
+  if (!dateStr) return "No date";
+
   const date = new Date(dateStr);
-  return isNaN(date) ? dateStr : date.toLocaleDateString('en-GB', { day: '2-digit', month: 'short', year: 'numeric' });
+
+  if (isNaN(date)) return dateStr;
+
+  return date.toLocaleDateString("en-GB", {
+    day: "2-digit",
+    month: "short",
+    year: "numeric"
+  });
 }
 
 function statusText(status) {
+
   return {
-    new: 'New',
-    upcoming: 'Upcoming',
-    active: 'Active',
-    completed: 'Completed',
-    cancelled: 'Cancelled',
-    'call-only': 'Call-only'
-  }[status] || 'Upcoming';
+    new: "New",
+    upcoming: "Upcoming",
+    active: "Active",
+    completed: "Completed",
+    cancelled: "Cancelled",
+    "call-only": "Call-only"
+  }[status] || "New";
 }
 
 function statusClass(status) {
+
   return `status-${status}`;
 }
 
 function getIcon(status) {
+
   return {
-    new: '✨',
-    upcoming: '⏳',
-    active: '🚗',
-    completed: '✅',
-    cancelled: '❌',
-    'call-only': '📞'
-  }[status] || '⏳';
+    new: "✨",
+    upcoming: "⏳",
+    active: "🚗",
+    completed: "✅",
+    cancelled: "❌",
+    "call-only": "📞"
+  }[status] || "✨";
 }
 
-function renderDashboard() {
-  const tripList = document.getElementById('tripList');
-  const rideSearch = document.getElementById('rideSearch');
-  const totalRides = document.getElementById('totalRides');
-  const todayCount = document.getElementById('todayCount');
-  const activeCount = document.getElementById('activeCount');
-  const callsCount = document.getElementById('callsCount');
 
-  if (!tripList || !totalRides || !todayCount || !activeCount || !callsCount) return;
+/* ------------------------------
+   LOAD BOOKINGS
+-------------------------------- */
 
-  const query = (rideSearch?.value || '').trim().toLowerCase();
-  let trips = getTrips();
+async function loadBookings() {
 
-  if (currentFilter === 'today') {
-    trips = trips.filter((trip) => trip.date === getToday());
-  } else if (currentFilter === 'upcoming') {
-    trips = trips.filter((trip) => trip.status === 'upcoming' || trip.status === 'new');
-  } else if (currentFilter === 'completed') {
-    trips = trips.filter((trip) => trip.status === 'completed');
-  } else if (currentFilter === 'calls') {
-    trips = trips.filter((trip) => trip.status === 'call-only');
-  }
+  const tripList =
+    document.getElementById("tripList");
 
-  if (query) {
-    trips = trips.filter((trip) => {
-      return `${trip.name} ${trip.pickup} ${trip.destination} ${trip.phone}`.toLowerCase().includes(query);
+  if (!tripList) return;
+
+  tripList.innerHTML =
+    '<div class="empty-state">Loading trips...</div>';
+
+  const {
+    data,
+    error
+  } = await supabaseClient
+    .from("bookings")
+    .select("*")
+    .order("travel_date", {
+      ascending: true
+    })
+    .order("created_at", {
+      ascending: false
     });
-  }
 
-  trips.sort((a, b) => new Date(a.date) - new Date(b.date));
+  if (error) {
 
-  tripList.innerHTML = trips.length
-    ? trips.map((trip) => `
-      <article class="trip-card">
-        <div class="trip-card-main">
-          <span class="trip-customer">${trip.name}</span>
-          <span class="trip-route">${trip.pickup} → ${trip.destination}</span>
-        </div>
+    console.error(error);
 
-        <div class="trip-info">
-          <div>
-            <div class="trip-date">${formatDate(trip.date)}</div>
-            <div class="trip-meta">${trip.carType} • ${trip.phone}</div>
-          </div>
-          <span class="status-badge ${statusClass(trip.status)}">${getIcon(trip.status)} ${statusText(trip.status)}</span>
-        </div>
+    tripList.innerHTML =
+      '<div class="empty-state">Unable to load trips.</div>';
 
-        <div class="trip-actions">
-          <button class="small-btn primary" type="button" data-action="status" data-status="upcoming" data-id="${trip.id}">Upcoming</button>
-          <button class="small-btn" type="button" data-action="status" data-status="active" data-id="${trip.id}">Active</button>
-          <button class="small-btn" type="button" data-action="status" data-status="completed" data-id="${trip.id}">Done</button>
-          <button class="small-btn" type="button" data-action="call" data-id="${trip.id}">Call</button>
-          <button class="small-btn danger" type="button" data-action="delete" data-id="${trip.id}" aria-label="Delete ride for ${trip.name}">Delete</button>
-        </div>
-      </article>
-    `).join('')
-    : '<div class="empty-state">No rides found for this view.</div>';
-
-  totalRides.textContent = getTrips().length;
-  todayCount.textContent = getTrips().filter((trip) => trip.date === getToday()).length;
-  activeCount.textContent = getTrips().filter((trip) => trip.status === 'active').length;
-  callsCount.textContent = getTrips().filter((trip) => trip.status === 'call-only').length;
-}
-
-function updateTripStatus(tripId, nextStatus) {
-  const trips = getTrips();
-  const updatedTrips = trips.map((trip) => {
-    if (trip.id === tripId) {
-      return { ...trip, status: nextStatus };
-    }
-    return trip;
-  });
-  saveTrips(updatedTrips);
-  renderDashboard();
-  showToast('Trip updated');
-}
-
-function deleteTrip(tripId) {
-  const trips = getTrips();
-  const updatedTrips = trips.filter((trip) => trip.id !== tripId);
-  if (updatedTrips.length === trips.length) return;
-  saveTrips(updatedTrips);
-  if (document.getElementById('tripList')) renderDashboard();
-  showToast('Trip deleted');
-}
-
-function openManualForm() {
-  const drawer = document.getElementById('tripDrawer');
-  if (drawer) drawer.classList.remove('hidden');
-}
-
-function closeManualForm() {
-  const drawer = document.getElementById('tripDrawer');
-  if (drawer) drawer.classList.add('hidden');
-}
-
-function handleManualTripSubmit(event) {
-  event.preventDefault();
-  const form = event.target;
-  const formData = new FormData(form);
-  const trip = {
-    id: 'R-' + Math.floor(Date.now() / 1000),
-    name: (formData.get('name') || '').toString().trim(),
-    phone: (formData.get('phone') || '').toString().trim(),
-    pickup: (formData.get('pickup') || '').toString().trim(),
-    destination: (formData.get('destination') || '').toString().trim(),
-    date: (formData.get('date') || '').toString(),
-    carType: (formData.get('carType') || '').toString(),
-    status: (formData.get('status') || 'upcoming').toString(),
-    notes: (formData.get('notes') || '').toString().trim(),
-    source: 'manual',
-  };
-
-  if (!trip.name || !trip.phone || !trip.pickup || !trip.destination || !trip.date || !trip.carType) {
-    showToast('Please fill all details');
     return;
   }
 
-  const trips = getTrips();
-  trips.push(trip);
-  saveTrips(trips);
-  form.reset();
-  closeManualForm();
+  bookings = data || [];
+
   renderDashboard();
-  showToast('Trip saved');
 }
+
+
+/* ------------------------------
+   RENDER
+-------------------------------- */
+
+function renderDashboard() {
+
+  const tripList =
+    document.getElementById("tripList");
+
+  const search =
+    document.getElementById("rideSearch");
+
+  if (!tripList) return;
+
+  const query =
+    (search?.value || "")
+      .trim()
+      .toLowerCase();
+
+  let trips = [...bookings];
+
+  if (currentFilter === "today") {
+
+    trips = trips.filter(
+      trip => trip.travel_date === getToday()
+    );
+  }
+
+  if (currentFilter === "upcoming") {
+
+    trips = trips.filter(
+      trip =>
+        trip.status === "upcoming" ||
+        trip.status === "new"
+    );
+  }
+
+  if (currentFilter === "completed") {
+
+    trips = trips.filter(
+      trip => trip.status === "completed"
+    );
+  }
+
+  if (currentFilter === "calls") {
+
+    trips = trips.filter(
+      trip => trip.status === "call-only"
+    );
+  }
+
+  if (query) {
+
+    trips = trips.filter(trip => {
+
+      return `
+        ${trip.name}
+        ${trip.pickup}
+        ${trip.destination}
+        ${trip.phone}
+      `
+      .toLowerCase()
+      .includes(query);
+
+    });
+  }
+
+  tripList.innerHTML =
+    trips.length
+
+      ? trips.map(trip => `
+
+        <article class="trip-card">
+
+          <div class="trip-card-main">
+
+            <span class="trip-customer">
+              ${escapeHtml(trip.name)}
+            </span>
+
+            <span class="trip-route">
+              ${escapeHtml(trip.pickup)}
+              →
+              ${escapeHtml(trip.destination)}
+            </span>
+
+          </div>
+
+
+          <div class="trip-info">
+
+            <div>
+
+              <div class="trip-date">
+                ${formatDate(trip.travel_date)}
+              </div>
+
+              <div class="trip-meta">
+                ${escapeHtml(trip.car_type || "")}
+                •
+                ${escapeHtml(trip.phone)}
+              </div>
+
+            </div>
+
+            <span
+              class="status-badge ${statusClass(trip.status)}"
+            >
+              ${getIcon(trip.status)}
+              ${statusText(trip.status)}
+            </span>
+
+          </div>
+
+
+          <div class="trip-actions">
+
+            <button
+              class="small-btn primary"
+              type="button"
+              data-action="status"
+              data-status="upcoming"
+              data-id="${trip.id}"
+            >
+              Upcoming
+            </button>
+
+            <button
+              class="small-btn"
+              type="button"
+              data-action="status"
+              data-status="active"
+              data-id="${trip.id}"
+            >
+              Active
+            </button>
+
+            <button
+              class="small-btn"
+              type="button"
+              data-action="status"
+              data-status="completed"
+              data-id="${trip.id}"
+            >
+              Done
+            </button>
+
+            <button
+              class="small-btn"
+              type="button"
+              data-action="call"
+              data-id="${trip.id}"
+            >
+              Call
+            </button>
+
+          </div>
+
+        </article>
+
+      `).join("")
+
+      : '<div class="empty-state">No rides found.</div>';
+
+
+  document.getElementById("totalRides").textContent =
+    bookings.length;
+
+  document.getElementById("todayCount").textContent =
+    bookings.filter(
+      trip => trip.travel_date === getToday()
+    ).length;
+
+  document.getElementById("activeCount").textContent =
+    bookings.filter(
+      trip => trip.status === "active"
+    ).length;
+
+  document.getElementById("callsCount").textContent =
+    bookings.filter(
+      trip => trip.status === "call-only"
+    ).length;
+}
+
+
+/* ------------------------------
+   UPDATE STATUS
+-------------------------------- */
+
+async function updateTripStatus(
+  tripId,
+  nextStatus
+) {
+
+  const {
+    error
+  } = await supabaseClient
+    .from("bookings")
+    .update({
+      status: nextStatus,
+      updated_at: new Date().toISOString()
+    })
+    .eq("id", tripId);
+
+  if (error) {
+
+    console.error(error);
+
+    showToast("Unable to update trip.");
+
+    return;
+  }
+
+  const trip =
+    bookings.find(
+      item => item.id === tripId
+    );
+
+  if (trip) {
+    trip.status = nextStatus;
+  }
+
+  renderDashboard();
+
+  showToast("Trip updated");
+}
+
+
+/* ------------------------------
+   CALL CUSTOMER
+-------------------------------- */
+
+function callCustomer(tripId) {
+
+  const trip =
+    bookings.find(
+      item => item.id === tripId
+    );
+
+  if (!trip) return;
+
+  window.location.href =
+    `tel:${trip.phone}`;
+}
+
+
+/* ------------------------------
+   LOGOUT
+-------------------------------- */
+
+async function logout() {
+
+  await supabaseClient.auth.signOut();
+
+  sessionStorage.removeItem(
+    "sn_driver_name"
+  );
+
+  sessionStorage.removeItem(
+    "sn_driver_id"
+  );
+
+  window.location.href =
+    "dashboard-login.html";
+}
+
+
+/* ------------------------------
+   SECURITY CHECK
+-------------------------------- */
+
+async function checkDriverSession() {
+
+  const {
+    data: {
+      session
+    }
+  } = await supabaseClient.auth.getSession();
+
+  if (!session) {
+
+    window.location.replace(
+      "dashboard-login.html"
+    );
+
+    return false;
+  }
+
+  const {
+    data: driver,
+    error
+  } = await supabaseClient
+    .from("drivers")
+    .select(
+      "id, name, driver_id, is_active"
+    )
+    .eq(
+      "auth_user_id",
+      session.user.id
+    )
+    .single();
+
+  if (
+    error ||
+    !driver ||
+    !driver.is_active
+  ) {
+
+    await supabaseClient.auth.signOut();
+
+    window.location.replace(
+      "dashboard-login.html"
+    );
+
+    return false;
+  }
+
+  const driverName =
+    document.getElementById("driverName");
+
+  if (driverName) {
+    driverName.textContent =
+      driver.name;
+  }
+
+  return true;
+}
+
+
+/* ------------------------------
+   TOAST
+-------------------------------- */
+
+function showToast(message) {
+
+  const toast =
+    document.getElementById("toast");
+
+  if (!toast) return;
+
+  toast.textContent = message;
+
+  toast.classList.add("show");
+
+  clearTimeout(
+    showToast.timeoutId
+  );
+
+  showToast.timeoutId =
+    setTimeout(
+      () => toast.classList.remove("show"),
+      2200
+    );
+}
+
+
+/* ------------------------------
+   EVENTS
+-------------------------------- */
 
 function bindDashboardEvents() {
-  const addTripButton = document.getElementById('addTripButton');
-  const closeDrawer = document.getElementById('closeDrawer');
-  const logoutButton = document.getElementById('logoutButton');
-  const rideSearch = document.getElementById('rideSearch');
-  const manualTripForm = document.getElementById('manualTripForm');
 
-  if (addTripButton) addTripButton.addEventListener('click', openManualForm);
-  if (closeDrawer) closeDrawer.addEventListener('click', closeManualForm);
+  const logoutButton =
+    document.getElementById(
+      "logoutButton"
+    );
+
+  const rideSearch =
+    document.getElementById(
+      "rideSearch"
+    );
+
   if (logoutButton) {
-    logoutButton.addEventListener('click', () => {
-      window.location.href = 'dashboard-login.html';
-    });
+
+    logoutButton.addEventListener(
+      "click",
+      logout
+    );
   }
+
   if (rideSearch) {
-    rideSearch.addEventListener('input', renderDashboard);
-  }
-  if (manualTripForm) {
-    manualTripForm.addEventListener('submit', handleManualTripSubmit);
+
+    rideSearch.addEventListener(
+      "input",
+      renderDashboard
+    );
   }
 
-  document.querySelectorAll('[data-filter]').forEach((button) => {
-    button.addEventListener('click', () => {
-      currentFilter = button.dataset.filter;
-      document.querySelectorAll('[data-filter]').forEach((item) => item.classList.toggle('active', item === button));
-      renderDashboard();
+  document
+    .querySelectorAll("[data-filter]")
+    .forEach(button => {
+
+      button.addEventListener(
+        "click",
+        () => {
+
+          currentFilter =
+            button.dataset.filter;
+
+          document
+            .querySelectorAll(
+              "[data-filter]"
+            )
+            .forEach(item => {
+
+              item.classList.toggle(
+                "active",
+                item === button
+              );
+
+            });
+
+          renderDashboard();
+        }
+      );
+
     });
-  });
 
-  document.addEventListener('click', (event) => {
-    const actionBtn = event.target.closest('[data-action]');
-    if (!actionBtn) return;
-    const tripId = actionBtn.dataset.id;
-    const action = actionBtn.dataset.action;
 
-    if (action === 'status') {
-      updateTripStatus(tripId, actionBtn.dataset.status);
-    }
+  document.addEventListener(
+    "click",
+    event => {
 
-    if (action === 'call') {
-      const trip = getTrips().find((item) => item.id === tripId);
-      if (trip) {
-        window.location.href = `tel:${trip.phone}`;
+      const actionBtn =
+        event.target.closest(
+          "[data-action]"
+        );
+
+      if (!actionBtn) return;
+
+      const tripId =
+        actionBtn.dataset.id;
+
+      const action =
+        actionBtn.dataset.action;
+
+
+      if (action === "status") {
+
+        updateTripStatus(
+          tripId,
+          actionBtn.dataset.status
+        );
       }
-    }
 
-    if (action === 'delete') {
-      const trip = getTrips().find((item) => item.id === tripId);
-      if (trip && window.confirm(`Delete the ride for ${trip.name}?`)) {
-        deleteTrip(tripId);
+
+      if (action === "call") {
+
+        callCustomer(tripId);
       }
+
     }
-  });
+  );
 }
 
-getTrips();
 
-if (window.location.pathname.endsWith('dashboard.html')) {
-  localStorage.removeItem('sn_driver_session');
-  window.location.replace('dashboard-login.html');
+/* ------------------------------
+   HTML ESCAPE
+-------------------------------- */
+
+function escapeHtml(value) {
+
+  return String(value ?? "")
+    .replaceAll("&", "&amp;")
+    .replaceAll("<", "&lt;")
+    .replaceAll(">", "&gt;")
+    .replaceAll('"', "&quot;")
+    .replaceAll("'", "&#039;");
 }
 
-const phoneInput = document.querySelector('input[name="phone"]');
-if (phoneInput) {
-  phoneInput.addEventListener('input', (event) => {
-    event.target.value = event.target.value.replace(/\D/g, '').slice(0, 10);
-  });
-}
+
+/* ------------------------------
+   START
+-------------------------------- */
+
+(async function () {
+
+  if (
+    !window.location.pathname.endsWith(
+      "dashboard.html"
+    )
+  ) {
+    return;
+  }
+
+  const authenticated =
+    await checkDriverSession();
+
+  if (!authenticated) return;
+
+  bindDashboardEvents();
+
+  await loadBookings();
+
+})();

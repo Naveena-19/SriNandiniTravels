@@ -1,12 +1,12 @@
 const config = {
-  phone: '+917981568447',
-  phoneDigits: '917981568447',
+  phone: '+916305523749',
+  phoneDigits: '916305523749',
   prices: {
     fiveSeater: 15,
     sevenSeater: 19,
     threshold: 300,
   },
-  siteUrl: 'https://example.com',
+  siteUrl: 'https://www.srinandinitravels.com/',
 };
 
 const translations = {

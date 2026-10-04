@@ -45,20 +45,115 @@ button {
   cursor: pointer;
 }
 
-.dashboard-body {
-  display: grid;
-  grid-template-columns: 260px 1fr;
+
+/* =========================
+   LOGIN
+========================= */
+
+.login-shell {
   min-height: 100vh;
+  display: grid;
+  place-items: center;
+  background: linear-gradient(
+    135deg,
+    #f2f6f9,
+    #eaf5f8
+  );
+
+  padding: 22px;
 }
 
-.sidebar {
-  background: linear-gradient(180deg, #0d3f4e 0%, #0a2d3b 100%);
-  color: white;
-  padding: 28px 20px;
-  display: flex;
-  flex-direction: column;
-  gap: 28px;
+.login-card {
+  width: min(430px, 100%);
+  background: white;
+  border: 1px solid var(--line);
+  border-radius: 24px;
+  box-shadow: var(--shadow);
+  padding: 32px 26px;
 }
+
+.login-logo {
+  margin-bottom: 20px;
+}
+
+.login-card h1 {
+  margin: 6px 0 10px;
+  font-size: 2rem;
+}
+
+.login-description {
+  color: var(--muted);
+  line-height: 1.6;
+  margin-bottom: 24px;
+}
+
+.login-form {
+  display: grid;
+  gap: 16px;
+}
+
+.login-form label {
+  display: grid;
+  gap: 8px;
+  color: var(--muted);
+  font-weight: 700;
+  font-size: 0.9rem;
+}
+
+.login-form input {
+  width: 100%;
+  padding: 13px 14px;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  background: var(--bg);
+  outline: none;
+}
+
+.login-form input:focus {
+  border-color: var(--primary);
+  box-shadow: 0 0 0 3px var(--primary-soft);
+}
+
+.password-wrap {
+  position: relative;
+}
+
+.password-wrap input {
+  padding-right: 70px;
+}
+
+.password-toggle {
+  position: absolute;
+  right: 8px;
+  top: 50%;
+  transform: translateY(-50%);
+  border: none;
+  background: transparent;
+  color: var(--primary);
+  font-weight: 700;
+  font-size: 0.8rem;
+}
+
+.login-message {
+  min-height: 20px;
+  color: var(--red);
+  font-size: 0.85rem;
+  text-align: center;
+}
+
+.back-link {
+  display: block;
+  text-align: center;
+  margin-top: 20px;
+  color: var(--primary);
+  text-decoration: none;
+  font-weight: 700;
+}
+
+
+/* =========================
+   COMMON
+========================= */
 
 .brand-panel {
   display: flex;
@@ -71,7 +166,11 @@ button {
   height: 48px;
   display: grid;
   place-items: center;
-  background: linear-gradient(135deg, var(--secondary), #ffcf70);
+  background: linear-gradient(
+    135deg,
+    var(--secondary),
+    #ffcf70
+  );
   border-radius: 16px;
   color: var(--primary-deep);
   font-weight: 800;
@@ -84,6 +183,85 @@ button {
 
 .brand-panel small {
   color: rgba(255, 255, 255, 0.7);
+}
+
+.eyebrow {
+  margin: 0 0 8px;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--muted);
+  font-size: 0.76rem;
+  font-weight: 700;
+}
+
+h1,
+h2,
+h3,
+p {
+  margin: 0;
+}
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 44px;
+  border: none;
+  border-radius: 12px;
+  padding: 0 18px;
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.btn-primary {
+  background: linear-gradient(
+    135deg,
+    var(--primary),
+    var(--primary-deep)
+  );
+
+  color: white;
+
+  box-shadow:
+    0 16px 28px rgba(20, 92, 111, 0.2);
+}
+
+.btn-light {
+  background: white;
+  color: var(--primary);
+  border: 1px solid var(--line);
+}
+
+.full-width {
+  width: 100%;
+}
+
+
+/* =========================
+   DASHBOARD
+========================= */
+
+.dashboard-body {
+  display: grid;
+  grid-template-columns: 260px 1fr;
+  min-height: 100vh;
+}
+
+.sidebar {
+  background: linear-gradient(
+    180deg,
+    #0d3f4e 0%,
+    #0a2d3b 100%
+  );
+
+  color: white;
+
+  padding: 28px 20px;
+
+  display: flex;
+  flex-direction: column;
+
+  gap: 28px;
 }
 
 .nav {
@@ -142,20 +320,7 @@ button {
   margin-bottom: 26px;
 }
 
-.eyebrow {
-  margin: 0 0 8px;
-  text-transform: uppercase;
-  letter-spacing: 0.08em;
-  color: var(--muted);
-  font-size: 0.76rem;
-  font-weight: 700;
-}
-
-h1, h2, h3, p {
-  margin: 0;
-}
-
-h1 {
+.topbar-dashboard h1 {
   font-size: clamp(2rem, 3vw, 2.5rem);
 }
 
@@ -166,37 +331,16 @@ h1 {
   flex-wrap: wrap;
 }
 
-.btn {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  min-height: 44px;
-  border: none;
-  border-radius: 12px;
-  padding: 0 18px;
-  font-weight: 700;
-  text-decoration: none;
-}
 
-.btn-primary {
-  background: linear-gradient(135deg, var(--primary), var(--primary-deep));
-  color: white;
-  box-shadow: 0 16px 28px rgba(20, 92, 111, 0.2);
-}
-
-.btn-light {
-  background: white;
-  color: var(--primary);
-  border: 1px solid var(--line);
-}
-
-.full-width {
-  width: 100%;
-}
+/* =========================
+   STATS
+========================= */
 
 .stats-grid {
   display: grid;
-  grid-template-columns: repeat(4, minmax(180px, 1fr));
+  grid-template-columns:
+    repeat(4, minmax(180px, 1fr));
+
   gap: 18px;
   margin-bottom: 28px;
 }
@@ -210,7 +354,11 @@ h1 {
 }
 
 .stat-card.accent {
-  background: linear-gradient(135deg, var(--primary-soft), #ffffff);
+  background: linear-gradient(
+    135deg,
+    var(--primary-soft),
+    #ffffff
+  );
 }
 
 .stat-card span,
@@ -221,9 +369,14 @@ h1 {
 
 .stat-card strong {
   display: block;
-  font-size: clamp(1.7rem, 2vw, 2.1rem);
+  font-size: 2.1rem;
   margin: 10px 0 6px;
 }
+
+
+/* =========================
+   PANEL
+========================= */
 
 .panel {
   background: var(--card);
@@ -262,12 +415,17 @@ h1 {
 }
 
 .search-box input {
-  min-width: 220px;
+  min-width: 250px;
   padding: 10px 12px;
   border-radius: 10px;
   border: 1px solid var(--line);
   background: var(--bg);
 }
+
+
+/* =========================
+   TRIPS
+========================= */
 
 .trip-list {
   display: grid;
@@ -276,12 +434,18 @@ h1 {
 
 .trip-card {
   display: grid;
-  grid-template-columns: 1.1fr 1.5fr auto;
+  grid-template-columns:
+    1.1fr 1.5fr auto;
+
   gap: 16px;
   align-items: center;
+
   background: #fff;
+
   border: 1px solid var(--line);
+
   border-radius: 18px;
+
   padding: 18px;
 }
 
@@ -311,12 +475,17 @@ h1 {
 
 .trip-date {
   font-weight: 700;
-  color: var(--text);
 }
 
 .trip-meta {
   color: var(--muted);
   font-size: 0.92rem;
+}
+
+.trip-notes {
+  color: var(--muted);
+  font-size: 0.82rem;
+  margin-top: 5px;
 }
 
 .status-badge {
@@ -328,7 +497,6 @@ h1 {
   border-radius: 999px;
   font-size: 0.8rem;
   font-weight: 800;
-  letter-spacing: 0.04em;
 }
 
 .status-upcoming {
@@ -390,22 +558,35 @@ h1 {
   color: #a62e2b;
 }
 
-.small-btn.danger:hover {
-  background: #fce0de;
-}
+
+/* =========================
+   DRAWER
+========================= */
 
 .trip-drawer {
   position: fixed;
   right: 20px;
   top: 20px;
   bottom: 20px;
-  width: min(420px, calc(100% - 30px));
+
+  width: min(
+    420px,
+    calc(100% - 30px)
+  );
+
   background: white;
+
   border: 1px solid var(--line);
+
   border-radius: 24px;
-  box-shadow: 0 30px 50px rgba(16, 37, 46, 0.18);
+
+  box-shadow:
+    0 30px 50px rgba(16, 37, 46, 0.18);
+
   padding: 18px;
+
   overflow-y: auto;
+
   z-index: 40;
 }
 
@@ -452,19 +633,36 @@ h1 {
   background: var(--bg);
 }
 
+
+/* =========================
+   TOAST
+========================= */
+
 .toast {
   position: fixed;
+
   right: 18px;
   bottom: 18px;
+
   background: rgba(15, 86, 102, 0.95);
+
   color: white;
+
   padding: 12px 16px;
+
   border-radius: 12px;
+
   box-shadow: var(--shadow);
+
   opacity: 0;
+
   transform: translateY(10px);
+
   pointer-events: none;
+
   transition: all 0.2s ease;
+
+  z-index: 100;
 }
 
 .toast.show {
@@ -472,59 +670,26 @@ h1 {
   transform: translateY(0);
 }
 
-.login-shell {
-  min-height: 100vh;
-  display: grid;
-  place-items: center;
-  background: linear-gradient(135deg, #f2f6f9, #eaf5f8);
-  padding: 22px;
-}
 
-.login-card {
-  width: min(420px, 100%);
-  background: white;
-  border: 1px solid var(--line);
-  border-radius: 24px;
-  box-shadow: var(--shadow);
-  padding: 28px 22px;
-}
+/* =========================
+   EMPTY STATE
+========================= */
 
-.login-card h1 {
-  margin-bottom: 10px;
-}
-
-.login-card p {
+.empty-state {
+  padding: 45px 20px;
+  text-align: center;
   color: var(--muted);
-  margin-bottom: 18px;
+  border: 1px dashed var(--line);
+  border-radius: 16px;
 }
 
-.login-form {
-  display: grid;
-  gap: 14px;
-}
 
-.login-form label {
-  display: grid;
-  gap: 8px;
-  color: var(--muted);
-  font-weight: 700;
-}
-
-.login-form input {
-  width: 100%;
-  padding: 12px 14px;
-  border: 1px solid var(--line);
-  border-radius: 12px;
-  background: var(--bg);
-}
-
-.login-help {
-  margin-top: 14px;
-  color: var(--muted);
-  font-size: 0.82rem;
-}
+/* =========================
+   MOBILE
+========================= */
 
 @media (max-width: 900px) {
+
   .dashboard-body {
     grid-template-columns: 1fr;
   }
@@ -534,7 +699,8 @@ h1 {
   }
 
   .stats-grid {
-    grid-template-columns: repeat(2, minmax(150px, 1fr));
+    grid-template-columns:
+      repeat(2, minmax(150px, 1fr));
   }
 
   .trip-card {
@@ -544,9 +710,11 @@ h1 {
   .trip-actions {
     justify-content: flex-start;
   }
+
 }
 
 @media (max-width: 640px) {
+
   .dashboard-main {
     padding: 18px;
   }
@@ -557,6 +725,10 @@ h1 {
     align-items: flex-start;
   }
 
+  .search-box {
+    width: 100%;
+  }
+
   .search-box input {
     min-width: 100%;
   }
@@ -564,4 +736,72 @@ h1 {
   .stats-grid {
     grid-template-columns: 1fr;
   }
+
+  .login-card {
+    padding: 26px 20px;
+  }
+  .brand-login {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 28px;
+}
+
+.brand-login strong,
+.brand-login small {
+  display: block;
+}
+
+.brand-login small {
+  color: var(--muted);
+  margin-top: 3px;
+}
+
+.login-heading {
+  margin-bottom: 24px;
+}
+
+.login-heading h1 {
+  margin-bottom: 10px;
+}
+
+.login-heading p:not(.eyebrow) {
+  color: var(--muted);
+  line-height: 1.6;
+}
+
+.login-error {
+  min-height: 20px;
+  color: var(--red);
+  font-size: 0.85rem;
+  font-weight: 600;
+}
+
+.login-form button:disabled {
+  opacity: 0.65;
+  cursor: not-allowed;
+}
+
+.back-link {
+  display: block;
+  margin-top: 20px;
+  text-align: center;
+  color: var(--primary);
+  text-decoration: none;
+  font-weight: 700;
+}
+
+.back-link:hover {
+  text-decoration: underline;
+}
+
+.empty-state {
+  padding: 40px 20px;
+  text-align: center;
+  color: var(--muted);
+  border: 1px dashed var(--line);
+  border-radius: 16px;
+}
+
+
 }
